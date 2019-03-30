@@ -1,5 +1,5 @@
 # IoTGoat
- IoT Goat will be a deliberately insecure firmware based on OpenWrt. The project’s goal is to teach users about the most common vulnerabilities typically found in IoT devices. The vulnerabilities will be based on the top 10 vulnerabilities as documented by OWASP: https://www.owasp.org/index.php/OWASP_Internet_of_Things_Project
+ IoT Goat will be a deliberately insecure firmware based on OpenWrt. The project's goal is to teach users about the most common vulnerabilities typically found in IoT devices. The vulnerabilities will be based on the top 10 vulnerabilities as documented by OWASP: https://www.owasp.org/index.php/OWASP_Internet_of_Things_Project
 
 <h3> Getting started </h3>
 
@@ -11,24 +11,26 @@ or run the following commands to download, decompress, and convert the virtual m
 ```
 $ wget https://downloads.openwrt.org/releases/18.06.2/targets/x86/generic/openwrt-18.06.2-x86-generic-combined-ext4.img.gz
 $ gunzip openwrt-18.06.2-x86-generic-combined-ext4.img.gz
-$ qemu-img convert -f raw -O vmdk openwrt-18.06.2-x86-generic-combined-ext4.img lede1806.vmdk
+$ qemu-img convert -f raw -O vmdk openwrt-18.06.2-x86-generic-combined-ext4.img openwrt-18.06.2-x86-generic-combined-ext4.vmdk
 ```
 ###### Note: Other virtualization methods are available. Please see https://openwrt.org/docs/guide-user/virtualization/start
-2) Once the image is converted to a vmdk image, open VMWare and "Create a custom virtual machine"
+2) Once the image is converted to a vmdk image, open VMWare and "Create a custom virtual machine" (File -> New -> Create a custom virtual machine).
 
-3) Select "Other Linux 2.6.x kernel” or “Other Linux 3.x kernel" as the guest operating system an E1000 NIC adapter which may need to be changed via the ".vmx" file as demonstrated below.  
+3) Select "Other Linux 2.6.x kernel" or "Other Linux 3.x kernel" as the guest operating system. In the next screen, select "Legacy BIOS" as the boot firmware.  
 
-4) Within the virtual machine settings, select “Hard Disk” and change the bus type to use an “IDE" virtual disk (not SCSI).
+4) Select "Use an existing virtual disk" and select the .vmdk you generated in Step 1. 
+
+![IDE](/images/disk.png)
+
+5) Go to "Customize Settings" and select "Hard Disk" to change the bus type to use an "IDE" virtual disk (not SCSI).
 
 ![IDE](/images/IDE.png)
 
-5) Modify the Virtual Machine’s “.vmx” file to use the E1000 NIC by inserting “ethernetN.virtualDev = "e1000””
+6) Modify the Virtual Machine's ".vmx" file to use the E1000 NIC by inserting "ethernetN.virtualDev = "e1000"" and save the file.
 
 ![vmxiotgoat](/images/vmx.png)
 
-###### Note: In OS X, you will need to right click the VMWare image and select “Show in Finder” then right click and select “Show Package Contents” where you should now be able to see the “.vmx” file.
-
-6) Save the file
+###### Note: In OS X, you will need to right click the VMWare image and select "Show in Finder" then right click and select "Show Package Contents" where you should now be able to see the ".vmx" file.
 
 7) Open VMWare and create another network adapter for internet access (one adapter is fo the LAN, and one adapter is for WAN communication)
 Ensure your Network adapter settings are set to NAT
