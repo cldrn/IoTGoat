@@ -48,7 +48,7 @@ To build your custom firmware, run the following command:
 ###### Note: Building firmware can take several hours depending on your internet connection.
 <br>
 
-`# make -j1 V=s`
+`# export FORCE_UNSAFE_CONFIGURE=1 && make -j1 V=s`
 
 After the firmware is successfully built, the image will be located in: <br>
 `bin/targets/brcm2708/bcrm2708/`
